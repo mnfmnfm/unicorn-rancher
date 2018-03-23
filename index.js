@@ -44,7 +44,7 @@ db.sequelize.sync().then(() => {
       price: req.body.price
     }
     db.Product.create(newProduct).then(savedProduct => {
-      res.json(savedProduct);
+      res.redirect("/")
     })
   })
 
