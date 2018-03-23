@@ -27,11 +27,13 @@ $(document).ready(() => {
       }
     })
   }
+  let {thing1, thing2} = {}
   function rerender() {
     unicorns = unicorns.sort((a,b) => a.name > b.name)
     $unicornTarget.empty()
     $unicornTarget.append(unicorns.map(getUnicornHtml));
   }
+
   function getUnicornHtml(unicorn) {
     return `
       <div class="row" style="background-color: ${unicorn.coloring}">
@@ -50,6 +52,7 @@ $(document).ready(() => {
       </div>
     `;
   }
+
   // passed location is selected
   function getSelect(location, id) {
     let options = locations.map(x => {
@@ -61,5 +64,6 @@ $(document).ready(() => {
       </select>
     `
   }
+
   getData();
 });
