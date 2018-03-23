@@ -14,18 +14,7 @@ db.sequelize.sync().then(() => {
 
   // Web homepage of app
   app.get("/", function(req, res) {
-    db.Product.findAll().then(products => {
-      console.log(products[0].get('name'));
-      products = products.map(p => {
-        return {
-          name: p.name,
-          price: currencyFormatter.format(p.price / 100, { locale: 'en-US' }),
-        };
-      });
-      app.render("home", {products: products}, (err, contents) => {
-        res.render("layout", {contents: contents});
-      });
-    });
+        res.render("layout");
   });
 
   // API index for products
@@ -35,6 +24,12 @@ db.sequelize.sync().then(() => {
       res.json(products);
     })
   })
+
+  app.get("/api/unicorns", function(req, res) {
+    db.Unicorn.findAll().then(unicorns => {
+      res.json(unicorns);
+    });
+  });
 
   // API create for products
   app.post("/api/products", function(req, res) {

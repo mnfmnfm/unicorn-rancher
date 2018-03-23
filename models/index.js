@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('practice-pen', 'sequelize', 'sosecret', {
+const sequelize = new Sequelize('unicorn-rancher', 'sequelize', 'sosecret', {
   host: 'localhost',
   dialect:'postgres',
   pool: {
@@ -16,13 +16,15 @@ const sequelize = new Sequelize('practice-pen', 'sequelize', 'sosecret', {
 });
 
 // define models in file because look how easy life is
-const Product = sequelize.define('product', {
+const Unicorn = sequelize.define('unicorn', {
   name: Sequelize.STRING,
-  price: Sequelize.INTEGER
+  coloring: Sequelize.STRING,
+  food: Sequelize.STRING,
+  location: Sequelize.STRING
 });
 
 
 module.exports = {
   sequelize,
-  Product
+  Unicorn
 }
