@@ -1,6 +1,5 @@
 const express = require('express');
 const ejs = require('ejs');
-const bodyParser = require('body-parser');
 const currencyFormatter = require('currency-formatter');
 const app = express();
 const db = require('./models');
@@ -9,8 +8,8 @@ db.sequelize.sync().then(() => {
   app.set('view engine', 'ejs');
 
   app.use(express.static("public"));
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
 
   // Web homepage of app
   app.get("/", function(req, res) {
@@ -25,11 +24,22 @@ db.sequelize.sync().then(() => {
     })
   })
 
+  // unicorn index
   app.get("/api/unicorns", function(req, res) {
     db.Unicorn.findAll().then(unicorns => {
       res.json(unicorns);
     });
   });
+
+  // unicorn update (just location)
+  app.put("/api/unicorns/:id", function(req, res) {
+    db.Unicorn.update(
+      { location: req.body.location },
+      { where: { id: req.params.id }, returning: true }
+    ).then((stuff) => {
+      res.json(stuff[1][0])
+    })
+  })
 
   // API create for products
   app.post("/api/products", function(req, res) {
